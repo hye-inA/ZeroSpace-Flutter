@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'zeroplace/screens/mainPage/view/MainPageView1/mainPageView1.dart';
-import 'zeroplace/screens/mainPage/view/MainPageView2/mainPageView2.dart';
+import 'zeroplace/screens/mainPage/MainPageView1/mainPageView1.dart';
+import 'zeroplace/screens/mainPage/MainPageView2/mainPageView2.dart';
 
 void main() {
   runApp(const MyApp());

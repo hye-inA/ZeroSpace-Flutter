@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:zeroplace/const/color.dart';
+import 'package:zeroplace/zeroplace/screens/detailPage/detailPage.dart';
 import 'package:zeroplace/zeroplace/screens/detailPage/ticketPage.dart';
-
-import '../../../detailPage/detailPage.dart';
 
 class MainPageView1 extends StatefulWidget {
   const MainPageView1({super.key});
@@ -28,19 +27,20 @@ class _MainPageView1State extends State<MainPageView1> {
 
   int pageIndex = 0;
 
-  @override
-  void initState() {
-    print("INIT");
-    run();
-    super.initState();
-  }
-
   void run() {
     Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      this
-          .pageController
-          .nextPage(duration: Duration(seconds: 1), curve: Curves.linear);
+      this.pageController.nextPage(
+            duration: Duration(seconds: 1),
+            curve: Curves.linear,
+          );
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("INIT");
+    run();
   }
 
   @override
@@ -145,9 +145,10 @@ class _MainPageView1State extends State<MainPageView1> {
             height: 90.0,
             margin: EdgeInsets.symmetric(horizontal: 5.0),
             color: Colors.blue,
+            //PageView + jumpToPage
             child: PageView.builder(
               onPageChanged: (int index) {
-                this.pageIndex = index % bannerModel.items.length;
+                this.pageIndex = index; //% bannerModel.items.length;
               },
               controller: pageController,
               //itemCount: model.items.length,
@@ -157,6 +158,7 @@ class _MainPageView1State extends State<MainPageView1> {
                 final BannerItemModel(:img) = item;
                 return GestureDetector(
                   onTap: () {
+                    /// TODO : Go_router 또는 GetX 로 리펙토링 ( Get.to() )
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
