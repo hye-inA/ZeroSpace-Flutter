@@ -34,17 +34,17 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('스터디룸'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: IconButton(onPressed: () {}, icon: Icon(Icons.add_card)),
-          )
-        ],
-      ),
+      // backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   title: Text('스터디룸'),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 4.0),
+      //       child: IconButton(onPressed: () {}, icon: Icon(Icons.add_card)),
+      //     )
+      //   ],
+      // ),
       body: PageView(
         controller: this.pageController,
         onPageChanged: (int index) {

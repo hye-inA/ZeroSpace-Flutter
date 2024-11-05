@@ -54,6 +54,16 @@ class _MainPageView1State extends State<MainPageView1> {
     // 배너, 이용권 화면
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text('스터디룸'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 4.0),
+            child: IconButton(onPressed: () {}, icon: Icon(Icons.add_card)),
+          )
+        ],
+      ),
       body: Column(
         children: [
           SingleChildScrollView(
@@ -82,46 +92,38 @@ class _MainPageView1State extends State<MainPageView1> {
                       color: LIGHT_GREY_COLOR,
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Container(
-                            color: Colors.transparent,
-                            margin: EdgeInsets.only(top: 100.0),
-                            width: MediaQuery.of(context).size.width,
-                            child: Icon(
-                              Icons.add_card,
-                              color: Colors.black26,
-                              size: 150.0,
+                        Container(
+                          color: Colors.transparent,
+                          width: MediaQuery.of(context).size.width,
+                          child: Icon(
+                            Icons.add_card,
+                            color: Colors.black26,
+                            size: 150.0,
+                          ),
+                        ),
+                        //Spacer(),
+                        Container(
+                          color: Colors.transparent,
+                          width: MediaQuery.of(context).size.width,
+                          child: Text(
+                            "스티디룸 예약",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              color: DARK_GREY_COLOR,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10.0),
-                                color: Colors.transparent,
-                                width: MediaQuery.of(context).size.width,
-                                child: Text(
-                                  "스티디룸 예약",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 25.0,
-                                    color: DARK_GREY_COLOR,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                color: Colors.transparent,
-                                child: Text(
-                                  "이용권 구매는 화면을 누르시면 가능합니다",
-                                  style: TextStyle(
-                                      color: Colors.black26,
-                                      fontWeight: FontWeight.w200),
-                                ),
-                              ),
-                            ],
+                        Container(
+                          color: Colors.transparent,
+                          child: Text(
+                            "이용권 구매는 화면을 누르시면 가능합니다",
+                            style: TextStyle(
+                                color: Colors.black26,
+                                fontWeight: FontWeight.w800),
                           ),
                         ),
                       ],
