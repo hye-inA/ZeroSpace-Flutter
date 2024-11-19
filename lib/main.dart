@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zeroplace/common/const/app_colors.dart';
+import 'package:zeroplace/common/view/splash_screen.dart';
+import 'package:zeroplace/zeroplace/screens/mainPage/MainPageView3/view/login_screen.dart';
 
 import 'zeroplace/screens/mainPage/MainPageView1/mainPageView1.dart';
-import 'zeroplace/screens/mainPage/MainPageView2/mainPageView2.dart';
+import 'zeroplace/screens/mainPage/MainPageView2/screen/mainPageView2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),
-    );
+        theme: ThemeData(fontFamily: 'roboto'),
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen() //MainPage(),
+        );
   }
 }
 
@@ -34,17 +38,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.white,
-      //   title: Text('스터디룸'),
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsets.only(right: 4.0),
-      //       child: IconButton(onPressed: () {}, icon: Icon(Icons.add_card)),
-      //     )
-      //   ],
-      // ),
       body: PageView(
         controller: this.pageController,
         onPageChanged: (int index) {
@@ -55,21 +48,28 @@ class _MainPageState extends State<MainPage> {
         children: [
           MainPageView1(),
           MainPageView2(),
-          //MainPageView3(),
+          LoginScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.meeting_room), label: "스터디룸"),
+            icon: Icon(Icons.meeting_room),
+            label: "스터디룸",
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month), label: "예약현황"),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "메뉴"),
+            icon: Icon(Icons.calendar_month),
+            label: "예약현황",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: "로그인",
+          ),
         ],
         // item 3개 이상일때 디폴드로 적용되는 색상, 애니메이션 적용 해제
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
+        selectedItemColor: AppColors.DARK_GREEN_COLOR,
         currentIndex: bottomIndex,
         onTap: (int index) {
           //아이콘이 선택되었을때 build() 함수 재실행하면서 선택된 page index 값을 넘겨주어서 페이지 전환

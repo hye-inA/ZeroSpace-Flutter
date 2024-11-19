@@ -4,11 +4,14 @@ import 'package:zeroplace/common/const/app_colors.dart';
 class CustomTextFormField extends StatelessWidget {
   final TextInputAction textInputAction;
   final TextInputType keyboardType;
-  final String? labelText;
+  final String labelText;
   final String? hintText;
   final String? errorText;
-  final bool obscureText;
-  final bool autofocus;
+  final bool obscureText; // 선택적이지만 기본값이 필요한 필드
+  final bool autofocus; // non-nullable + 기본값: false
+  final FocusNode? focusNode;
+  final void Function()? onEditingComplete;
+
   final ValueChanged<String>? onChanged;
 
   const CustomTextFormField({
@@ -20,6 +23,8 @@ class CustomTextFormField extends StatelessWidget {
     this.errorText,
     this.obscureText = false,
     this.autofocus = false,
+    this.focusNode,
+    this.onEditingComplete,
     Key? key,
   }) : super(key: key);
 
@@ -32,9 +37,9 @@ class CustomTextFormField extends StatelessWidget {
 
     return TextFormField(
       cursorColor: AppColors.PRIMARY_GREEN,
-      // 비밀번호
       obscureText: obscureText,
       autofocus: autofocus,
+      focusNode: focusNode,
       keyboardType: keyboardType,
       onChanged: onChanged,
       decoration: InputDecoration(
