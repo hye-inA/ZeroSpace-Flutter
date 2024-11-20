@@ -1,20 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:zeroplace/const/color.dart';
-import 'package:zeroplace/zeroplace/screens/detailPage/detailPage.dart';
-import 'package:zeroplace/zeroplace/screens/detailPage/ticketPage.dart';
+import 'package:zeroplace/common/layout/default_layout.dart';
+import 'package:zeroplace/studyroom/view/banner_detail_screen.dart';
+import 'package:zeroplace/studyroom/view/studyroom_list_screen.dart';
 
-class MainPageView1 extends StatefulWidget {
-  const MainPageView1({super.key});
+import '../../common/const/app_colors.dart';
+
+class StudyroomScreen extends StatefulWidget {
+  const StudyroomScreen({super.key});
 
   @override
-  State<MainPageView1> createState() => _MainPageView1State();
+  State<StudyroomScreen> createState() => _StudyroomScreenState();
 }
 
-/// TODO : img 문자열 경로 따로 분리
-class _MainPageView1State extends State<MainPageView1> {
+class _StudyroomScreenState extends State<StudyroomScreen> {
   PageController pageController = PageController();
+
   BannerModel bannerModel = BannerModel(menus: [
     BannerMenuModel(txt: "1"),
     BannerMenuModel(txt: "2"),
@@ -39,7 +41,6 @@ class _MainPageView1State extends State<MainPageView1> {
   @override
   void initState() {
     super.initState();
-    print("INIT");
     run();
   }
 
@@ -51,25 +52,19 @@ class _MainPageView1State extends State<MainPageView1> {
 
   @override
   Widget build(BuildContext context) {
-    // 배너, 이용권 화면
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('스터디룸'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: IconButton(onPressed: () {}, icon: Icon(Icons.add_card)),
-          )
-        ],
-      ),
-      body: Column(
+    return DefaultLayout(
+      title: 'ZERO SPACE',
+      child: Column(
         children: [
+          SizedBox(
+            height: 12,
+          ),
           SingleChildScrollView(
             child: Column(
               children: [
-                Container(child: banner(bannerModel)),
+                Container(
+                  child: banner(bannerModel),
+                ),
               ],
             ),
           ),
@@ -78,18 +73,26 @@ class _MainPageView1State extends State<MainPageView1> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TicketPage()),
+                  MaterialPageRoute(
+                    builder: (context) => StudyroomTicketList(),
+                  ),
                 );
               },
               child: PageView(
                 children: [
                   Container(
-                    margin:
-                        EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0),
+                    margin: EdgeInsets.only(
+                      left: 12.0,
+                      right: 12.0,
+                      bottom: 12.0,
+                    ),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 0.2, color: DARK_GREY_COLOR),
+                      border: Border.all(
+                        width: 0.2,
+                        color: AppColors.DARK_GREEN_COLOR,
+                      ),
                       borderRadius: BorderRadius.circular(20.0),
-                      color: LIGHT_GREY_COLOR,
+                      color: Colors.white,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +115,7 @@ class _MainPageView1State extends State<MainPageView1> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25.0,
-                              color: DARK_GREY_COLOR,
+                              color: AppColors.DARK_GREY_COLOR,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -143,24 +146,18 @@ class _MainPageView1State extends State<MainPageView1> {
       child: Column(
         children: [
           Container(
-            //width: 380.0,
             height: 90.0,
             margin: EdgeInsets.symmetric(horizontal: 5.0),
-            color: Colors.blue,
-            //PageView + jumpToPage
             child: PageView.builder(
               onPageChanged: (int index) {
-                this.pageIndex = index; //% bannerModel.items.length;
+                this.pageIndex = index;
               },
               controller: pageController,
-              //itemCount: model.items.length,
               itemBuilder: (BuildContext context, int index) {
                 final pageIndex = index % bannerModel.items.length;
                 final BannerItemModel item = model.items[pageIndex];
-                final BannerItemModel(:img) = item;
                 return GestureDetector(
                   onTap: () {
-                    /// TODO : Go_router 또는 GetX 로 리펙토링 ( Get.to() )
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
@@ -218,11 +215,3 @@ class BannerModel {
     this.onTap,
   });
 }
-
-/// TODO: 배너 이미지, 배너 메뉴 클래스 분리된 거 리펙토링
-// class BannerMenuModeltmp {
-//  final String txt;
-//   final String img;
-//   BannerMenuModeltmp({required this.img, required this.txt});
-// }
-// List<BannerMenuModeltmp> bannerlist = [BannerMenuModel(txt,img) ,BannerMenuModel(txt,img),..]

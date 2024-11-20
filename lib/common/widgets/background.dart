@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zeroplace/common/const/app_colors.dart';
 
-class LoginBackground extends StatelessWidget {
+class Background extends StatelessWidget {
   final List<Widget> children;
 
-  const LoginBackground({
+  const Background({
     required this.children,
     super.key,
   });

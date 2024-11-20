@@ -9,8 +9,8 @@ import 'package:zeroplace/common/const/app_strings.dart';
 import 'package:zeroplace/common/const/app_theme.dart';
 import 'package:zeroplace/common/const/data.dart';
 import 'package:zeroplace/common/layout/default_layout.dart';
-import 'package:zeroplace/common/view/logged_in_home_screen.dart';
-import 'package:zeroplace/zeroplace/screens/mainPage/MainPageView3/widgets/login_background.dart';
+import 'package:zeroplace/common/view/home_screen.dart';
+import 'package:zeroplace/common/widgets/background.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         padding: EdgeInsets.zero,
         children: [
-          LoginBackground(children: [
+          Background(children: [
             Text(
               AppStrings.welcome,
               style: AppTheme.titleLarge,
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => LoggedInHomeScreen(),
+                          builder: (_) => HomeScreen(),
                         ),
                       );
                       print(resp.data);
