@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeroplace/common/const/app_colors.dart';
 import 'package:zeroplace/common/layout/default_layout.dart';
-import 'package:zeroplace/reservation/mainPageView2.dart';
+import 'package:zeroplace/reservation/view/calendar_screen.dart';
 import 'package:zeroplace/studyroom/view/studyroom_screen.dart';
 import 'package:zeroplace/user/view/login_screen.dart';
 
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen>
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: controller,
-        children: [StudyroomScreen(), MainPageView2(), LoginScreen()],
+        children: [StudyroomScreen(), CalendarScreen(), LoginScreen()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

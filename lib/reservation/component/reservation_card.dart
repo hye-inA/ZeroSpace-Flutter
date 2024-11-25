@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:zeroplace/common/const/app_colors.dart';
 
 class ReservationCard extends StatelessWidget {
-  final int startTime;
-  final int endTime;
+  final DateTime startTime;
+  final DateTime endTime;
+
   final String studyroomName;
   final String userName;
 
@@ -17,33 +18,30 @@ class ReservationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            color: AppColors.LIGHT_GREY_COLOR,
-            border: Border.all(
-              width: 1.0,
-              color: AppColors.DARK_GREEN_COLOR,
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 4.0,
+        ),
+        child: ListView(
+          children: [
+            Container(
+              /// TODO : 높이 수정
+              height: MediaQuery.of(context).size.height * 0.05,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _Time(startTime: startTime, endTime: endTime),
+                  SizedBox(width: 16.0),
+                  _Content(
+                    studyroomName: studyroomName,
+                    userName: userName,
+                  ),
+                ],
+              ),
             ),
-            borderRadius: BorderRadius.circular(16.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(width: 16.0),
-                _Time(startTime: startTime, endTime: endTime),
-                SizedBox(width: 16.0),
-                _Content(
-                  studyroomName: studyroomName,
-                  userName: userName,
-                ),
-                SizedBox(width: 16.0),
-              ],
-            ),
-          ),
+          ],
         ),
       ),
     );
@@ -51,8 +49,8 @@ class ReservationCard extends StatelessWidget {
 }
 
 class _Time extends StatelessWidget {
-  final int startTime;
-  final int endTime;
+  final DateTime startTime;
+  final DateTime endTime;
 
   _Time({required this.startTime, required this.endTime, super.key});
 
@@ -68,11 +66,11 @@ class _Time extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${startTime.toString().padLeft(2, '0')}:00',
+          '${startTime.hour.toString().padLeft(2, '0')}:00',
           style: textStyle,
         ),
         Text(
-          '~ ${endTime.toString().padLeft(2, '0')}:00',
+          '~ ${endTime.hour.toString().padLeft(2, '0')}:00',
           style: textStyle.copyWith(fontSize: 10.0),
         ),
       ],
@@ -92,47 +90,48 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(width: 1.6, color: AppColors.PRIMARY_GREEN),
-              borderRadius: BorderRadius.circular(16.0),
-              color: Colors.white,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 4.0,
-                bottom: 4.0,
-                left: 8.0,
-                right: 8.0,
-              ),
-              child: Text(
-                studyroomName,
+    final textStyle = TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.bold,
+      color: AppColors.DARK_GREEN_COLOR,
+      letterSpacing: 1.0,
+    );
 
-                /// TODO : copyWith 적용
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.DARK_GREEN_COLOR,
-                  fontSize: 16.0,
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.LIGHT_GREY_COLOR,
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: Colors.white,
+                ),
+                child: Text(
+                  studyroomName,
+                  style: textStyle,
                 ),
               ),
-            ),
+              SizedBox(width: 20.0),
+              Text(
+                userName,
+                style: textStyle,
+              ),
+            ],
           ),
-          SizedBox(width: 20.0),
-          Text(
-            userName,
-
-            /// TODO : copyWith 적용
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppColors.DARK_GREEN_COLOR,
-              fontSize: 16.0,
-              letterSpacing: 1.0,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:zeroplace/common/view/splash_screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:zeroplace/common/view/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting('ko_KR', null);
   runApp(const MyApp());
 }
 
@@ -12,9 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'roboto'),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    );
+        theme: ThemeData(fontFamily: 'roboto'),
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen() //SplashScreen(),
+        );
   }
 }
