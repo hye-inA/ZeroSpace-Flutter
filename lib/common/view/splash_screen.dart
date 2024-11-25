@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zeroplace/common/const/app_colors.dart';
 import 'package:zeroplace/common/const/data.dart';
 import 'package:zeroplace/common/layout/default_layout.dart';
-import 'package:zeroplace/main.dart';
-import 'package:zeroplace/zeroplace/screens/mainPage/MainPageView3/view/login_screen.dart';
+import 'package:zeroplace/common/view/home_screen.dart';
+import 'package:zeroplace/user/view/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,8 +16,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    deleteToken();
-    //checkToken();
+    //deleteToken();
+    checkToken();
   }
 
   void deleteToken() async {
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (_) => MainPage(),
+          builder: (_) => HomeScreen(),
         ),
         (route) => false,
       );
