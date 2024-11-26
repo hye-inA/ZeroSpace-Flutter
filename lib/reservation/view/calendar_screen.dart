@@ -3,6 +3,7 @@ import 'package:zeroplace/common/layout/default_layout.dart';
 import 'package:zeroplace/reservation/component/calendar.dart';
 import 'package:zeroplace/reservation/component/reservation_card.dart';
 import 'package:zeroplace/reservation/component/today_banner.dart';
+import 'package:zeroplace/reservation/model/reservation.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -17,6 +18,40 @@ class _CalendarScreenState extends State<CalendarScreen> {
     DateTime.now().month,
     DateTime.now().day,
   );
+
+  Map<DateTime, List<Reservation>> reservations = {
+    DateTime.utc(2024, 11, 26): [
+      Reservation(
+        id: 1,
+        startTime: 9,
+        endTime: 16,
+        studyroomName: '스터디룸1',
+        memberName: '허혜인',
+        date: DateTime.utc(2024, 11, 26),
+        createdAt: DateTime.now().toUtc(),
+      ),
+      Reservation(
+        id: 2,
+        startTime: 10,
+        endTime: 23,
+        studyroomName: '스터디룸2',
+        memberName: '정주원',
+        date: DateTime.utc(2024, 11, 26),
+        createdAt: DateTime.now().toUtc(),
+      ),
+    ],
+    DateTime.utc(2024, 11, 27): [
+      Reservation(
+        id: 1,
+        startTime: 9,
+        endTime: 16,
+        studyroomName: '스터디룸1',
+        memberName: '장윤영',
+        date: DateTime.utc(2024, 11, 26),
+        createdAt: DateTime.now().toUtc(),
+      ),
+    ]
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +69,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
               selectedDate: selectedDate,
               reservationCount: 0,
             ),
-            ReservationCard(
-              startTime: DateTime(2024, 11, 25, 17),
-              endTime: DateTime(2024, 11, 25, 22),
-              studyroomName: "스터디룸 1",
-              userName: "허혜인",
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 4.0,
+                ),
+                child: ListView(
+                  children: reservations.containsKey(selectedDate)
+                      ? reservations[selectedDate]!
+                          .map(
+                            (e) => ReservationCard(
+                                startTime: e.startTime,
+                                endTime: e.endTime,
+                                memberName: e.memberName,
+                                studyroomName: e.studyroomName),
+                          )
+                          .toList()
+                      : [],
+                ),
+              ),
             ),
           ],
         ),
