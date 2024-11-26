@@ -5,14 +5,14 @@ import 'package:zeroplace/reservation/component/reservation_card.dart';
 import 'package:zeroplace/reservation/component/today_banner.dart';
 import 'package:zeroplace/reservation/model/reservation.dart';
 
-class CalendarScreen extends StatefulWidget {
-  const CalendarScreen({super.key});
+class ReservationScreen extends StatefulWidget {
+  const ReservationScreen({super.key});
 
   @override
-  State<CalendarScreen> createState() => _CalendarScreenState();
+  State<ReservationScreen> createState() => _CalendarScreenState();
 }
 
-class _CalendarScreenState extends State<CalendarScreen> {
+class _CalendarScreenState extends State<ReservationScreen> {
   DateTime selectedDate = DateTime.utc(
     DateTime.now().year,
     DateTime.now().month,
@@ -75,18 +75,23 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   horizontal: 16.0,
                   vertical: 4.0,
                 ),
-                child: ListView(
-                  children: reservations.containsKey(selectedDate)
-                      ? reservations[selectedDate]!
-                          .map(
-                            (e) => ReservationCard(
-                                startTime: e.startTime,
-                                endTime: e.endTime,
-                                memberName: e.memberName,
-                                studyroomName: e.studyroomName),
-                          )
-                          .toList()
-                      : [],
+                child: ListView.builder(
+                  itemCount: reservations.containsKey(selectedDate)
+                      ? reservations[selectedDate]!.length
+                      : 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    // 선택된 날짜에 해당되는 예약 일정 리스트로 저장
+                    // List<Reservation>
+                    final selectedReservations = reservations[selectedDate]!;
+                    final reservationModel = selectedReservations[index];
+
+                    return ReservationCard(
+                      startTime: reservationModel.startTime,
+                      endTime: reservationModel.endTime,
+                      memberName: reservationModel.memberName,
+                      studyroomName: reservationModel.studyroomName,
+                    );
+                  },
                 ),
               ),
             ),
