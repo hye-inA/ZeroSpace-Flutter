@@ -2,44 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:zeroplace/common/const/app_colors.dart';
 
 class ReservationCard extends StatelessWidget {
-  final DateTime startTime;
-  final DateTime endTime;
+  final int startTime;
+  final int endTime;
 
   final String studyroomName;
-  final String userName;
+  final String memberName;
 
   const ReservationCard({
     required this.startTime,
     required this.endTime,
-    required this.userName,
+    required this.memberName,
     required this.studyroomName,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 4.0,
-        ),
-        child: ListView(
+    return Container(
+      child: Container(
+        /// TODO : 높이 수정
+        height: MediaQuery.of(context).size.height * 0.05,
+        padding: EdgeInsets.only(bottom: 4.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              /// TODO : 높이 수정
-              height: MediaQuery.of(context).size.height * 0.05,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _Time(startTime: startTime, endTime: endTime),
-                  SizedBox(width: 16.0),
-                  _Content(
-                    studyroomName: studyroomName,
-                    userName: userName,
-                  ),
-                ],
-              ),
+            _Time(startTime: startTime, endTime: endTime),
+            SizedBox(width: 16.0),
+            _Content(
+              studyroomName: studyroomName,
+              memberName: memberName,
             ),
           ],
         ),
@@ -49,8 +40,8 @@ class ReservationCard extends StatelessWidget {
 }
 
 class _Time extends StatelessWidget {
-  final DateTime startTime;
-  final DateTime endTime;
+  final int startTime;
+  final int endTime;
 
   _Time({required this.startTime, required this.endTime, super.key});
 
@@ -66,11 +57,11 @@ class _Time extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${startTime.hour.toString().padLeft(2, '0')}:00',
+          '${startTime.toString().padLeft(2, '0')}:00',
           style: textStyle,
         ),
         Text(
-          '~ ${endTime.hour.toString().padLeft(2, '0')}:00',
+          '~ ${endTime.toString().padLeft(2, '0')}:00',
           style: textStyle.copyWith(fontSize: 10.0),
         ),
       ],
@@ -79,11 +70,11 @@ class _Time extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  final String userName;
+  final String memberName;
   final String studyroomName;
 
   const _Content({
-    required this.userName,
+    required this.memberName,
     required this.studyroomName,
     Key? key,
   }) : super(key: key);
@@ -126,7 +117,7 @@ class _Content extends StatelessWidget {
               ),
               SizedBox(width: 20.0),
               Text(
-                userName,
+                memberName,
                 style: textStyle,
               ),
             ],
