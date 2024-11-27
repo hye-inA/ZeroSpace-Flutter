@@ -62,22 +62,16 @@ class _StudyroomTicketListState extends State<StudyroomTicketList> {
                     }
                     final List serverData = snapshot.data!;
 
-                    // 서버 데이터를 Studyroom 객체로 변환
-                    final studyrooms = serverData
-                        .map((item) => Studyroom(
-                              id: item['id'],
-                              studyroomName: item['studyroomName'],
-                              capacity: item['capacity'],
-                            ))
-                        .toList();
                     return ListView.separated(
-                      itemCount: studyrooms.length,
+                      itemCount: serverData.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final studyroomModel = studyrooms[index];
+                        final item = serverData[index];
+                        final pItem = Studyroom.fromJson(json: item);
+
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              selectedStudyroomId = studyroomModel.id;
+                              selectedStudyroomId = item.id;
                             });
                             Navigator.push(
                               context,
@@ -96,8 +90,8 @@ class _StudyroomTicketListState extends State<StudyroomTicketList> {
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             child: StudyroomCard(
-                              studyroomName: studyroomModel.studyroomName,
-                              capacity: studyroomModel.capacity,
+                              studyroomName: pItem.studyroomName,
+                              capacity: pItem.capacity,
                             ),
                           ),
                         );

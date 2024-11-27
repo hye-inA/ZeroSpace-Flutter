@@ -1,6 +1,6 @@
 class Studyroom {
   /// 1 ) 식별 가능한 ID
-  final int id;
+  final String id;
 
   /// 2 ) 스터디룸 이름
   final String studyroomName;
@@ -17,4 +17,14 @@ class Studyroom {
     required this.capacity,
     //required this.createdAt,
   });
+
+  factory Studyroom.fromJson({
+    required Map<String, dynamic> json,
+  }) {
+    return Studyroom(
+      id: json['id'],
+      studyroomName: json['studyroomName'],
+      capacity: json['capacity'],
+    );
+  }
 }
