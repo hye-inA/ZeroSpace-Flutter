@@ -89,9 +89,8 @@ class _StudyroomTicketListState extends State<StudyroomTicketList> {
                               ),
                               borderRadius: BorderRadius.circular(16.0),
                             ),
-                            child: StudyroomCard(
-                              studyroomName: pItem.studyroomName,
-                              capacity: pItem.capacity,
+                            child: StudyroomCard.fromModel(
+                              model: pItem,
                             ),
                           ),
                         );

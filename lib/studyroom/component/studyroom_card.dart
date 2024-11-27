@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeroplace/common/const/app_colors.dart';
+import 'package:zeroplace/studyroom/model/studyroom.dart';
 
 class StudyroomCard extends StatelessWidget {
   // 스터디룸 이름
@@ -13,6 +14,15 @@ class StudyroomCard extends StatelessWidget {
     required this.capacity,
     Key? key,
   }) : super(key: key);
+
+  factory StudyroomCard.fromModel({
+    required Studyroom model,
+  }) {
+    return StudyroomCard(
+      studyroomName: model.studyroomName,
+      capacity: model.capacity,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
