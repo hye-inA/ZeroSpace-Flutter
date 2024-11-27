@@ -16,7 +16,7 @@ class StudyroomTicketList extends StatefulWidget {
 }
 
 class _StudyroomTicketListState extends State<StudyroomTicketList> {
-  int? selectedStudyroomId;
+  String? selectedStudyroomId;
 
   Future<List> pagenateStudyroom() async {
     final dio = Dio();
@@ -32,19 +32,6 @@ class _StudyroomTicketListState extends State<StudyroomTicketList> {
 
     return response.data['data'];
   }
-
-  final List<Studyroom> studyrooms = [
-    Studyroom(
-      id: 1,
-      studyroomName: '스터디룸1',
-      capacity: 4,
-    ),
-    Studyroom(
-      id: 2,
-      studyroomName: '스터디룸2',
-      capacity: 6,
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +53,23 @@ class _StudyroomTicketListState extends State<StudyroomTicketList> {
                 child: FutureBuilder<List>(
                   future: pagenateStudyroom(),
                   builder: (context, AsyncSnapshot<List> snapshot) {
-                    print(snapshot.error);
-                    print(snapshot.data);
+                    /// TODO : 데이터 상태에 따른 UI 생성
+                    /// 1. 로딩 중인 경우
+                    /// 2. 에러가 발생한 경우
+                    /// 3. 데이터가 없는 경우
+                    if (!snapshot.hasData) {
+                      return Container();
+                    }
+                    final List serverData = snapshot.data!;
 
+                    // 서버 데이터를 Studyroom 객체로 변환
+                    final studyrooms = serverData
+                        .map((item) => Studyroom(
+                              id: item['id'],
+                              studyroomName: item['studyroomName'],
+                              capacity: item['capacity'],
+                            ))
+                        .toList();
                     return ListView.separated(
                       itemCount: studyrooms.length,
                       itemBuilder: (BuildContext context, int index) {
