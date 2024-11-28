@@ -7,15 +7,16 @@ import 'package:zeroplace/common/layout/default_layout.dart';
 import 'package:zeroplace/common/widgets/background.dart';
 import 'package:zeroplace/studyroom/component/studyroom_card.dart';
 import 'package:zeroplace/studyroom/model/studyroom.dart';
+import 'package:zeroplace/studyroom/view/studyroom_select_dateTIme_screen.dart';
 
-class StudyroomTicketList extends StatefulWidget {
-  const StudyroomTicketList({super.key});
+class StudyroomList extends StatefulWidget {
+  const StudyroomList({super.key});
 
   @override
-  State<StudyroomTicketList> createState() => _StudyroomTicketListState();
+  State<StudyroomList> createState() => _StudyroomListState();
 }
 
-class _StudyroomTicketListState extends State<StudyroomTicketList> {
+class _StudyroomListState extends State<StudyroomList> {
   String? selectedStudyroomId;
 
   Future<List> pagenateStudyroom() async {
@@ -71,12 +72,15 @@ class _StudyroomTicketListState extends State<StudyroomTicketList> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              selectedStudyroomId = item.id;
+                              selectedStudyroomId = pItem.id;
                             });
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Scaffold(),
+                                builder: (context) =>
+                                    StudyroomSelectDatetimeScreen(
+                                  studyroom: pItem,
+                                ),
                               ),
                             );
                           },
