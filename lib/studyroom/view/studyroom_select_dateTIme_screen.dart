@@ -7,6 +7,7 @@ import 'package:zeroplace/common/widgets/background.dart';
 import 'package:zeroplace/studyroom/model/studyroom.dart';
 
 import '../../common/const/app_colors.dart';
+import '../component/time_slot_item.dart';
 
 class StudyroomSelectDatetimeScreen extends StatefulWidget {
   final Studyroom studyroom;
@@ -42,6 +43,7 @@ class _StudyroomSelectDatetimeScreenState
     '09:00',
     '10:00',
     '11:00',
+    '12:00',
   ];
 
   final List<String> afternoonTimeSlots = [
@@ -57,6 +59,7 @@ class _StudyroomSelectDatetimeScreenState
     '21:00',
     '22:00',
     '23:00',
+    '24:00',
   ];
 
   void onDaySelected(DateTime selectedDate, DateTime focusedDate) {
@@ -88,7 +91,9 @@ class _StudyroomSelectDatetimeScreenState
     }
   }
 
-  // 시간대 선택 여부 확인
+  /// 기능 - 각 시간대가 선택된 시작 - 종료 시간 범위 안에 포함 여부 확인
+  /// 입력 매개변수 - time : 확인할 시간대 ( ex. "14:00" 형식 문자열 )
+  /// 반환값 - bool 값 ( true : 선택된 범위 안에 있음, false : 선택된 범위 밖, 시간/종료시간 선택안됨 )
   bool isTimeSlotSelected(String time) {
     if (_startTime == null || _endTime == null) return false;
 
@@ -230,7 +235,21 @@ class _StudyroomSelectDatetimeScreenState
                         height: 8.0,
                       ),
                       Column(
-                        children: [],
+                        children: (_isAfternoon
+                                ? afternoonTimeSlots
+                                : morningTimeSlots)
+                            .asMap()
+                            .entries
+                            .map((entry) {
+                          final index = entry.key;
+                          final time = entry.value;
+                          final slots = _isAfternoon
+                              ? afternoonTimeSlots
+                              : morningTimeSlots;
+                          final isSelected = isTimeSlotSelected(time);
+                          final isReserved = isTimeSlotReserved(time);
+                          return TimeSlotItem();
+                        }).toList(),
                       ),
                     ],
                   ),
