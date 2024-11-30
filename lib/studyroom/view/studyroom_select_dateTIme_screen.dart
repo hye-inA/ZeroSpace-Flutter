@@ -234,22 +234,37 @@ class _StudyroomSelectDatetimeScreenState
                       const SizedBox(
                         height: 8.0,
                       ),
-                      Column(
-                        children: (_isAfternoon
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(color: Colors.grey[300]!),
+                        ),
+                        child: Column(
+                          children: (_isAfternoon
+                                  ? afternoonTimeSlots
+                                  : morningTimeSlots)
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            final index = entry.key;
+                            final time = entry.value;
+                            final slots = _isAfternoon
                                 ? afternoonTimeSlots
-                                : morningTimeSlots)
-                            .asMap()
-                            .entries
-                            .map((entry) {
-                          final index = entry.key;
-                          final time = entry.value;
-                          final slots = _isAfternoon
-                              ? afternoonTimeSlots
-                              : morningTimeSlots;
-                          final isSelected = isTimeSlotSelected(time);
-                          final isReserved = isTimeSlotReserved(time);
-                          return TimeSlotItem();
-                        }).toList(),
+                                : morningTimeSlots;
+                            final isSelected = isTimeSlotSelected(time);
+                            final isReserved = isTimeSlotReserved(time);
+
+                            if (index == slots.length - 1) return Container();
+
+                            return TimeSlotItem(
+                              time: time,
+                              nextTime: slots[index + 1],
+                              isSelected: isSelected,
+                              isReserved: isReserved,
+                              onTap: () => _handleTimeSlotTap(time),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ],
                   ),
