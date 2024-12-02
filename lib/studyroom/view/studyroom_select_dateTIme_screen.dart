@@ -69,39 +69,60 @@ class _StudyroomSelectDatetimeScreenState
     });
   }
 
-  void _handleTimeSlotTap(String time) {
+  void _handleTimeSlotTap(String time, String nextTime) {
     final tappedHour = int.parse(time.split(':')[0]);
+    final nextHour = int.parse(nextTime.split(':')[0]);
 
-    // 시작 시간 선택 ( 새로운 시간 시간 선택 )
-    if (_startTime == null || _startTime != null && _endTime != null) {
+    // 1. 아무것도 선택되지 않은 경우 -> 시작 시간 설정
+    if (_startTime == null) {
+      setState(() {
+        _startTime = TimeOfDay(hour: tappedHour, minute: 0);
+      });
+      return;
+    }
+
+    final startHour = _startTime!.hour;
+
+    // 2. 시작 시간만 선택된 경우
+    if (_endTime == null) {
+      // 2-1. 시작 시간보다 이전 시간 선택 -> 새로운 시작 시간으로 설정
+      if (tappedHour <= startHour) {
+        setState(() {
+          _startTime = TimeOfDay(hour: tappedHour, minute: 0);
+        });
+      }
+      // 2-2. 시작 시간보다 이후 시간 선택 -> 종료 시간으로 설정
+      else {
+        setState(() {
+          _endTime = TimeOfDay(hour: nextHour, minute: 0);
+        });
+      }
+    }
+    // 3. 시작, 종료 시간 모두 선택된 경우 -> 새로운 시작 시간으로 설정
+    else {
       setState(() {
         _startTime = TimeOfDay(hour: tappedHour, minute: 0);
         _endTime = null;
       });
     }
-    // 종료 시간 선택
-    else {
-      final startHour = _startTime!.hour;
-      // 시작 시간보다 이후 시간대만 선택 가능
-      if (tappedHour > startHour) {
-        setState(() {
-          _endTime = TimeOfDay(hour: tappedHour, minute: 0);
-        });
-      }
-    }
   }
 
-  /// 기능 - 각 시간대가 선택된 시작 - 종료 시간 범위 안에 포함 여부 확인
+  /// 기능 - 각 시간대가 선택된 시작,종료 시간 범위 안에 포함 여부 확인
   /// 입력 매개변수 - time : 확인할 시간대 ( ex. "14:00" 형식 문자열 )
   /// 반환값 - bool 값 ( true : 선택된 범위 안에 있음, false : 선택된 범위 밖, 시간/종료시간 선택안됨 )
   bool isTimeSlotSelected(String time) {
-    if (_startTime == null || _endTime == null) return false;
-
     final currentHour = int.parse(time.split(':')[0]);
-    final startHour = _startTime!.hour;
-    final endHour = _endTime!.hour;
+    if (_startTime != null && _endTime == null) {
+      return currentHour == _startTime!.hour;
+    }
+    if (_startTime != null && _endTime != null) {
+      final startHour = _startTime!.hour;
+      final endHour = _endTime!.hour;
 
-    return currentHour >= startHour && currentHour < endHour;
+      return currentHour >= startHour && currentHour < endHour;
+    }
+
+    return false;
   }
 
   // 예약 가능 여부 확인
@@ -261,7 +282,8 @@ class _StudyroomSelectDatetimeScreenState
                               nextTime: slots[index + 1],
                               isSelected: isSelected,
                               isReserved: isReserved,
-                              onTap: () => _handleTimeSlotTap(time),
+                              onTap: () =>
+                                  _handleTimeSlotTap(time, slots[index + 1]),
                             );
                           }).toList(),
                         ),
