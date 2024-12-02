@@ -73,22 +73,37 @@ class _StudyroomSelectDatetimeScreenState
     final tappedHour = int.parse(time.split(':')[0]);
     final nextHour = int.parse(nextTime.split(':')[0]);
 
-    // 시작 시간 선택 ( 새로운 시간 시간 선택 )
-    if (_startTime == null || _startTime != null && _endTime != null) {
+    // 1. 아무것도 선택되지 않은 경우 -> 시작 시간 설정
+    if (_startTime == null) {
       setState(() {
         _startTime = TimeOfDay(hour: tappedHour, minute: 0);
-        _endTime = null;
       });
+      return;
     }
-    // 종료 시간 선택
-    else {
-      final startHour = _startTime!.hour;
-      // 시작 시간보다 이후 시간대만 선택 가능
-      if (tappedHour > startHour) {
+
+    final startHour = _startTime!.hour;
+
+    // 2. 시작 시간만 선택된 경우
+    if (_endTime == null) {
+      // 2-1. 시작 시간보다 이전 시간 선택 -> 새로운 시작 시간으로 설정
+      if (tappedHour <= startHour) {
+        setState(() {
+          _startTime = TimeOfDay(hour: tappedHour, minute: 0);
+        });
+      }
+      // 2-2. 시작 시간보다 이후 시간 선택 -> 종료 시간으로 설정
+      else {
         setState(() {
           _endTime = TimeOfDay(hour: nextHour, minute: 0);
         });
       }
+    }
+    // 3. 시작, 종료 시간 모두 선택된 경우 -> 새로운 시작 시간으로 설정
+    else {
+      setState(() {
+        _startTime = TimeOfDay(hour: tappedHour, minute: 0);
+        _endTime = null;
+      });
     }
   }
 
