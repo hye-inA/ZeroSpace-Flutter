@@ -176,22 +176,45 @@ class _StudyroomSelectDatetimeScreenState
       title: '',
       child: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Background(
               children: [
-                Text(
-                  widget.studyroom.studyroomName,
-                  style: AppTheme.titleSmall,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 4.0,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: AppColors.LIGHT_GREY_COLOR,
+                    ),
+                    child: Text(
+                      widget.studyroom.studyroomName,
+                      style: AppTheme.titleSmall.copyWith(
+                        color: AppColors.DARK_GREEN_COLOR,
+                      ),
+                    ),
+                  ),
                 ),
-                Text(
-                  getSelectedDateTimeSlot(),
-                  style: AppTheme.bodyMiddle,
+                SizedBox(
+                  height: 12.0,
                 ),
-                Text(
-                  AppStrings.pleaseChooseDatetime,
-                  style: AppTheme.titleMiddle,
+                Padding(
+                  padding: EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    getSelectedDateTimeSlot(),
+                    style: AppTheme.bodyMiddle,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 4.0),
+                  child: Text(
+                    AppStrings.pleaseChooseDatetime,
+                    style: AppTheme.titleMiddle,
+                  ),
                 ),
               ],
             ),
