@@ -20,9 +20,14 @@ class TimeSlotItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: isReserved ? onTap : null,
+      onTap: isReserved ? onTap : () {},
+      behavior: HitTestBehavior.opaque,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.04,
+        padding: EdgeInsets.symmetric(
+          vertical: 4.0,
+          horizontal: 8.0,
+        ),
+        height: MediaQuery.of(context).size.height * 0.05,
         decoration: BoxDecoration(
           color: isSelected ? Colors.green[100] : null,
           border: Border(

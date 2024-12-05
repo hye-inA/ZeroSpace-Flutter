@@ -42,12 +42,14 @@ class _StudyroomListState extends State<StudyroomList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Background(children: [
-              Text(
-                AppStrings.pleaseChooseStudyroom,
-                style: AppTheme.titleMiddle,
-              ),
-            ]),
+            Background(
+                height: MediaQuery.of(context).size.height * 0.04,
+                children: [
+                  Text(
+                    AppStrings.pleaseChooseStudyroom,
+                    style: AppTheme.titleMiddle,
+                  ),
+                ]),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -88,7 +90,7 @@ class _StudyroomListState extends State<StudyroomList> {
                             height: MediaQuery.of(context).size.height * 0.08,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: Colors.grey,
+                                color: Colors.grey[400]!,
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(16.0),

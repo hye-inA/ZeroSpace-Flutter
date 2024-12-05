@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         'http://$ip/auth/token',
         options: Options(
           headers: {
-            'authorization': 'Bearer $refreshToken',
+            'Authorization': 'Bearer $refreshToken',
           },
         ),
       );
